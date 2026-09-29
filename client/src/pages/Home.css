@@ -1,0 +1,552 @@
+/* =========================================
+   HOME PAGE
+========================================= */
+
+.home-hero {
+  background:
+    linear-gradient(
+      135deg,
+      #f0fdfa 0%,
+      #ffffff 55%,
+      #fffbeb 100%
+    );
+
+  padding: 85px 0;
+  overflow: hidden;
+}
+
+
+/* =========================================
+   HERO CONTENT
+========================================= */
+
+.hero-badge {
+  display: inline-block;
+
+  background: #fff7ed;
+  color: #ea580c;
+
+  padding: 8px 16px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  margin-bottom: 20px;
+
+  border: 1px solid #fed7aa;
+}
+
+
+.home-hero h1 {
+  font-size: 58px;
+
+  font-weight: 800;
+
+  line-height: 1.08;
+
+  color: #0f172a;
+
+  margin-bottom: 20px;
+}
+
+
+.home-hero h1 span {
+  color: #0d9488;
+}
+
+
+.home-hero p {
+  color: #64748b;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+
+  max-width: 560px;
+
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   HERO BUTTONS
+========================================= */
+
+.hero-buttons {
+  margin-top: 30px;
+
+  display: flex;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+}
+
+
+.shop-now-btn {
+  background: #0d9488;
+
+  color: white;
+
+  padding: 13px 28px;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: 0.3s;
+}
+
+
+.shop-now-btn:hover {
+  background: #0f766e;
+
+  color: white;
+
+  transform: translateY(-2px);
+}
+
+
+.explore-btn {
+  border: 1px solid #cbd5e1;
+
+  color: #334155;
+
+  padding: 13px 28px;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  background: white;
+
+  transition: 0.3s;
+}
+
+
+.explore-btn:hover {
+  border-color: #0d9488;
+
+  color: #0d9488;
+
+  background: #f0fdfa;
+}
+
+
+/* =========================================
+   HERO FEATURES
+========================================= */
+
+.hero-features {
+  display: flex;
+
+  gap: 45px;
+
+  margin-top: 45px;
+}
+
+
+.hero-features div {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.hero-features strong {
+  font-size: 22px;
+
+  color: #0f172a;
+}
+
+
+.hero-features small {
+  color: #64748b;
+
+  margin-top: 3px;
+}
+
+
+/* =========================================
+   HERO SHOPPING ICON
+========================================= */
+
+.hero-shopping-icon {
+  width: 350px;
+  height: 350px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ccfbf1,
+      #fef3c7
+    );
+
+  border-radius: 50%;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 155px;
+
+  box-shadow:
+    0 25px 70px rgba(13, 148, 136, 0.15);
+
+  border: 8px solid white;
+}
+
+
+/* =========================================
+   FLOATING CARDS
+========================================= */
+
+.floating-card {
+  position: relative;
+
+  background: white;
+
+  padding: 13px 20px;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.10);
+
+  display: inline-block;
+
+  font-weight: 700;
+
+  color: #334155;
+
+  border: 1px solid #f1f5f9;
+}
+
+
+.card-one {
+  top: -75px;
+
+  left: -120px;
+}
+
+
+.card-two {
+  top: -35px;
+
+  right: -105px;
+}
+
+
+/* =========================================
+   CATEGORIES
+========================================= */
+
+.categories-section {
+  padding: 80px 0;
+
+  background: #ffffff;
+}
+
+
+.section-heading {
+  text-align: center;
+
+  margin-bottom: 42px;
+}
+
+
+.section-heading span {
+  color: #0d9488;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+.section-heading h2 {
+  color: #0f172a;
+
+  font-size: 36px;
+
+  font-weight: 800;
+
+  margin-top: 8px;
+
+  margin-bottom: 8px;
+}
+
+
+.section-heading p {
+  color: #64748b;
+
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   CATEGORY CARD
+========================================= */
+
+.category-card {
+  display: block;
+
+  text-align: center;
+
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  padding: 32px 15px;
+
+  text-decoration: none;
+
+  color: #0f172a;
+
+  transition: all 0.3s ease;
+}
+
+
+.category-card:hover {
+  transform: translateY(-7px);
+
+  border-color: #0d9488;
+
+  box-shadow:
+    0 15px 35px rgba(15, 23, 42, 0.08);
+
+  color: #0f172a;
+}
+
+
+.category-icon {
+  width: 75px;
+  height: 75px;
+
+  margin: 0 auto 17px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f0fdfa;
+
+  border-radius: 50%;
+
+  font-size: 38px;
+
+  transition: 0.3s;
+}
+
+
+.category-card:hover .category-icon {
+  background: #ccfbf1;
+
+  transform: scale(1.08);
+}
+
+
+.category-card h5 {
+  font-weight: 750;
+
+  margin-bottom: 6px;
+}
+
+
+.category-card p {
+  color: #64748b;
+
+  margin: 0;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   BENEFITS
+========================================= */
+
+.benefits-section {
+  background: #f8fafc;
+
+  padding: 65px 0;
+
+  border-top: 1px solid #f1f5f9;
+}
+
+
+.benefit-card {
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 32px 25px;
+
+  text-align: center;
+
+  border: 1px solid #e2e8f0;
+
+  height: 100%;
+
+  transition: 0.3s;
+}
+
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.07);
+
+  border-color: #ccfbf1;
+}
+
+
+.benefit-card > div {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 17px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f0fdfa;
+
+  border-radius: 50%;
+
+  font-size: 30px;
+}
+
+
+.benefit-card h5 {
+  color: #0f172a;
+
+  font-weight: 750;
+
+  margin-bottom: 8px;
+}
+
+
+.benefit-card p {
+  color: #64748b;
+
+  margin-bottom: 0;
+
+  line-height: 1.6;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 991px) {
+
+  .home-hero {
+    padding: 65px 0;
+  }
+
+  .home-hero h1 {
+    font-size: 48px;
+  }
+
+  .hero-shopping-icon {
+    width: 290px;
+    height: 290px;
+
+    font-size: 125px;
+
+    margin-top: 60px;
+  }
+
+  .card-one {
+    left: -70px;
+  }
+
+  .card-two {
+    right: -65px;
+  }
+}
+
+
+@media (max-width: 767px) {
+
+  .home-hero {
+    padding: 50px 0;
+  }
+
+  .home-hero h1 {
+    font-size: 40px;
+  }
+
+  .home-hero p {
+    font-size: 16px;
+  }
+
+  .hero-buttons {
+    margin-top: 25px;
+
+    flex-direction: column;
+  }
+
+  .shop-now-btn,
+  .explore-btn {
+    text-align: center;
+
+    width: 100%;
+  }
+
+  .hero-features {
+    gap: 25px;
+
+    margin-top: 35px;
+  }
+
+  .hero-features strong {
+    font-size: 19px;
+  }
+
+  .hero-shopping-icon {
+    width: 230px;
+    height: 230px;
+
+    font-size: 100px;
+
+    margin-top: 50px;
+  }
+
+  .floating-card {
+    display: none;
+  }
+
+  .categories-section {
+    padding: 55px 0;
+  }
+
+  .section-heading h2 {
+    font-size: 29px;
+  }
+
+  .benefits-section {
+    padding: 45px 0;
+  }
+}
