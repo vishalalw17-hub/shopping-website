@@ -6,20 +6,22 @@ const Order = require("../models/Order");
 const createOrder = async (req, res) => {
   try {
     const {
-      user,
       items,
       shippingAddress,
       totalAmount,
       paymentMethod
     } = req.body;
 
+    // User ID comes from verified JWT
+    const userId = req.user.id;
+
     // Basic validation
     if (
-      !user ||
       !items ||
       items.length === 0 ||
       !shippingAddress ||
-      !totalAmount
+      totalAmount === undefined ||
+      totalAmount === null
     ) {
       return res.status(400).json({
         success: false,
@@ -28,7 +30,7 @@ const createOrder = async (req, res) => {
     }
 
     const order = await Order.create({
-      user,
+      user: userId,
       items,
       shippingAddress,
       totalAmount,
@@ -58,8 +60,11 @@ const createOrder = async (req, res) => {
 // =========================
 const getUserOrders = async (req, res) => {
   try {
+    // Use logged-in user's ID from JWT
+    const userId = req.user.id;
+
     const orders = await Order.find({
-      user: req.params.userId
+      user: userId
     })
       .populate("items.product")
       .sort({ createdAt: -1 });

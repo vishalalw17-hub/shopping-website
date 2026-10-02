@@ -9,7 +9,20 @@ const {
   deleteUser
 } = require("../controllers/adminController");
 
+const {
+  authMiddleware,
+  adminMiddleware
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
+
+
+// ================================
+// Admin Authentication
+// ================================
+
+router.use(authMiddleware);
+router.use(adminMiddleware);
 
 
 // ================================

@@ -7,15 +7,18 @@ function Header() {
 
   const [cartCount, setCartCount] = useState(0);
   const [user, setUser] = useState(null);
+  const [search, setSearch] = useState("");
 
   // =========================
   // CART COUNT
   // =========================
   const updateCartCount = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart =
+      JSON.parse(localStorage.getItem("cart")) || [];
 
     const count = cart.reduce(
-      (total, item) => total + (item.quantity || 0),
+      (total, item) =>
+        total + (item.quantity || 0),
       0
     );
 
@@ -26,7 +29,10 @@ function Header() {
   // CHECK USER
   // =========================
   const checkUser = () => {
-    const savedUser = JSON.parse(localStorage.getItem("user"));
+    const savedUser =
+      JSON.parse(
+        localStorage.getItem("user")
+      );
 
     setUser(savedUser);
   };
@@ -35,13 +41,41 @@ function Header() {
   // LOGOUT
   // =========================
   const handleLogout = () => {
+
+    // Remove logged-in user
     localStorage.removeItem("user");
 
+    // Remove JWT token
+    localStorage.removeItem("token");
+
+    // Clear user from Header
     setUser(null);
 
-    window.dispatchEvent(new Event("userUpdated"));
+    // Notify other components
+    window.dispatchEvent(
+      new Event("userUpdated")
+    );
 
+    // Go to login page
     navigate("/login");
+  };
+
+  // =========================
+  // SEARCH
+  // =========================
+  const handleSearch = () => {
+    const searchValue = search.trim();
+
+    if (!searchValue) {
+      navigate("/products");
+      return;
+    }
+
+    navigate(
+      `/products?search=${encodeURIComponent(
+        searchValue
+      )}`
+    );
   };
 
   // =========================
@@ -51,12 +85,26 @@ function Header() {
     updateCartCount();
     checkUser();
 
-    window.addEventListener("cartUpdated", updateCartCount);
-    window.addEventListener("userUpdated", checkUser);
+    window.addEventListener(
+      "cartUpdated",
+      updateCartCount
+    );
+
+    window.addEventListener(
+      "userUpdated",
+      checkUser
+    );
 
     return () => {
-      window.removeEventListener("cartUpdated", updateCartCount);
-      window.removeEventListener("userUpdated", checkUser);
+      window.removeEventListener(
+        "cartUpdated",
+        updateCartCount
+      );
+
+      window.removeEventListener(
+        "userUpdated",
+        checkUser
+      );
     };
   }, []);
 
@@ -73,12 +121,12 @@ function Header() {
           </span>
 
           <span className="top-right">
-            Easy Returns &nbsp; | &nbsp; Secure Payments
+            Easy Returns &nbsp; | &nbsp;
+            Secure Payments
           </span>
 
         </div>
       </div>
-
 
       {/* =========================
           MAIN HEADER
@@ -88,8 +136,10 @@ function Header() {
         <div className="header-container header-main">
 
           {/* LOGO */}
-          <Link to="/" className="brand-logo">
-
+          <Link
+            to="/"
+            className="brand-logo"
+          >
             <span className="brand-icon">
               🛍️
             </span>
@@ -97,9 +147,7 @@ function Header() {
             <span className="brand-name">
               Shop<span>Easy</span>
             </span>
-
           </Link>
-
 
           {/* SEARCH */}
           <div className="header-search">
@@ -110,22 +158,33 @@ function Header() {
 
             <input
               type="text"
+              value={search}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
               placeholder="Search for products, brands and more..."
             />
 
-            <button type="button">
+            <button
+              type="button"
+              onClick={handleSearch}
+            >
               Search
             </button>
 
           </div>
 
-
-          {/* HEADER ACTIONS */}
+          {/* =========================
+              HEADER ACTIONS
+          ========================= */}
           <div className="header-actions">
 
-            {/* =========================
-                USER
-            ========================= */}
+            {/* USER */}
             {user ? (
 
               <div className="user-account-wrapper">
@@ -153,18 +212,14 @@ function Header() {
 
                 </Link>
 
-
                 {/* USER DROPDOWN */}
                 <div className="user-dropdown">
 
-                  {/* PROFILE */}
                   <Link to="/user">
                     <span>👤</span>
                     My Profile
                   </Link>
 
-
-                  {/* ADMIN PANEL */}
                   {user.role === "admin" && (
                     <Link to="/admin">
                       <span>🛠️</span>
@@ -172,8 +227,6 @@ function Header() {
                     </Link>
                   )}
 
-
-                  {/* ADMIN PRODUCTS */}
                   {user.role === "admin" && (
                     <Link to="/admin/products">
                       <span>📦</span>
@@ -181,15 +234,12 @@ function Header() {
                     </Link>
                   )}
 
-
-                  {/* ADMIN ORDERS */}
                   {user.role === "admin" && (
                     <Link to="/admin/orders">
                       <span>🧾</span>
                       Manage Orders
                     </Link>
                   )}
-
 
                   {/* LOGOUT */}
                   <button
@@ -206,7 +256,6 @@ function Header() {
 
             ) : (
 
-              /* LOGIN */
               <Link
                 to="/login"
                 className="header-action"
@@ -232,10 +281,7 @@ function Header() {
 
             )}
 
-
-            {/* =========================
-                ORDERS
-            ========================= */}
+            {/* ORDERS */}
             <Link
               to="/my-orders"
               className="header-action orders-action"
@@ -259,10 +305,7 @@ function Header() {
 
             </Link>
 
-
-            {/* =========================
-                CART
-            ========================= */}
+            {/* CART */}
             <Link
               to="/cart"
               className="cart-action"
@@ -288,63 +331,53 @@ function Header() {
 
         </div>
 
-
         {/* =========================
             CATEGORY NAVIGATION
         ========================= */}
-<div className="category-navigation">
+        <div className="category-navigation">
 
-  <div className="header-container category-inner">
+          <div className="header-container category-inner">
 
-    {/* ALL PRODUCTS */}
-    <Link to="/products">
-      All Categories
-    </Link>
+            <Link to="/products">
+              All Categories
+            </Link>
 
-    {/* FASHION */}
-    <Link to="/products?category=Fashion">
-      👗 Fashion
-    </Link>
+            <Link to="/products?category=Fashion">
+              👗 Fashion
+            </Link>
 
-    {/* ELECTRONICS */}
-    <Link to="/products?category=Electronics">
-      📱 Electronics
-    </Link>
+            <Link to="/products?category=Electronics">
+              📱 Electronics
+            </Link>
 
-    {/* FOOTWEAR */}
-    <Link to="/products?category=Footwear">
-      👟 Footwear
-    </Link>
+            <Link to="/products?category=Footwear">
+              👟 Footwear
+            </Link>
 
-    {/* BEAUTY */}
-    <Link to="/products?category=Beauty">
-      💄 Beauty
-    </Link>
+            <Link to="/products?category=Beauty">
+              💄 Beauty
+            </Link>
 
-    {/* HOME & LIVING */}
-    <Link to="/products?category=Home%20%26%20Living">
-      🏠 Home & Living
-    </Link>
+            <Link to="/products?category=Home%20%26%20Living">
+              🏠 Home & Living
+            </Link>
 
-    {/* ACCESSORIES */}
-    <Link to="/products?category=Accessories">
-      ⌚ Accessories
-    </Link>
+            <Link to="/products?category=Accessories">
+              ⌚ Accessories
+            </Link>
 
-    {/* DEALS */}
-    <Link
-      to="/products"
-      className="deal-link"
-    >
-      🔥 Deals
-    </Link>
+            <Link
+              to="/products"
+              className="deal-link"
+            >
+              🔥 Deals
+            </Link>
 
-  </div>
+          </div>
 
-</div>
+        </div>
 
       </header>
-
 
       {/* =========================
           MOBILE BOTTOM NAV
@@ -392,7 +425,6 @@ function Header() {
         </Link>
 
       </div>
-
     </>
   );
 }

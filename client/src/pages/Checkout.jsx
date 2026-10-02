@@ -30,7 +30,9 @@ function Checkout() {
     const user =
       JSON.parse(localStorage.getItem("user"));
 
-    if (!user) {
+    const token = localStorage.getItem("token");
+
+    if (!user || !token) {
       alert("Please login before checkout");
       navigate("/login");
       return;
@@ -80,8 +82,11 @@ function Checkout() {
     const user =
       JSON.parse(localStorage.getItem("user"));
 
+    const token =
+      localStorage.getItem("token");
+
     // User check
-    if (!user) {
+    if (!user || !token) {
       alert("Please login first");
       navigate("/login");
       return;
@@ -96,22 +101,27 @@ function Checkout() {
 
     // Phone validation
     if (!/^[6-9]\d{9}$/.test(formData.phone)) {
-      alert("Please enter a valid 10 digit mobile number");
+      alert(
+        "Please enter a valid 10 digit mobile number"
+      );
       return;
     }
 
     // Pincode validation
     if (!/^\d{6}$/.test(formData.pincode)) {
-      alert("Please enter a valid 6 digit pincode");
+      alert(
+        "Please enter a valid 6 digit pincode"
+      );
       return;
     }
 
     try {
       setPlacingOrder(true);
 
+      // IMPORTANT:
+      // user ID is NOT sent manually.
+      // Backend gets user ID from JWT token.
       const orderData = {
-        user: user._id,
-
         items: cart.map((item) => ({
           product: item._id,
           name: item.name,
@@ -147,6 +157,7 @@ function Checkout() {
       // Clear cart
       localStorage.removeItem("cart");
 
+      // Update Header cart count
       window.dispatchEvent(
         new Event("cartUpdated")
       );
@@ -155,7 +166,22 @@ function Checkout() {
       navigate("/my-orders");
 
     } catch (error) {
-      console.log("ORDER ERROR:", error);
+      console.log(
+        "ORDER ERROR:",
+        error.response?.data || error
+      );
+
+      if (error.response?.status === 401) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+
+        alert(
+          "Your session has expired. Please login again."
+        );
+
+        navigate("/login");
+        return;
+      }
 
       alert(
         error.response?.data?.message ||
@@ -173,7 +199,6 @@ function Checkout() {
   if (cart.length === 0) {
     return (
       <div className="checkout-page">
-
         <div className="container">
 
           <div className="checkout-empty">
@@ -202,7 +227,6 @@ function Checkout() {
           </div>
 
         </div>
-
       </div>
     );
   }
@@ -232,7 +256,6 @@ function Checkout() {
           </p>
 
         </div>
-
 
         <div className="row g-4">
 
@@ -265,7 +288,6 @@ function Checkout() {
 
               </div>
 
-
               <form onSubmit={handlePlaceOrder}>
 
                 {/* NAME + PHONE */}
@@ -290,7 +312,6 @@ function Checkout() {
 
                   </div>
 
-
                   <div className="col-md-6 mb-3">
 
                     <label>
@@ -312,7 +333,6 @@ function Checkout() {
 
                 </div>
 
-
                 {/* ADDRESS */}
 
                 <div className="mb-3">
@@ -332,7 +352,6 @@ function Checkout() {
                   />
 
                 </div>
-
 
                 {/* CITY STATE PINCODE */}
 
@@ -356,7 +375,6 @@ function Checkout() {
 
                   </div>
 
-
                   <div className="col-md-4 mb-3">
 
                     <label>
@@ -374,7 +392,6 @@ function Checkout() {
                     />
 
                   </div>
-
 
                   <div className="col-md-4 mb-3">
 
@@ -397,7 +414,6 @@ function Checkout() {
 
                 </div>
 
-
                 {/* PAYMENT */}
 
                 <div className="payment-section">
@@ -409,6 +425,7 @@ function Checkout() {
                     </div>
 
                     <div>
+
                       <h4>
                         Payment Method
                       </h4>
@@ -417,10 +434,10 @@ function Checkout() {
                         Select your preferred
                         payment option.
                       </p>
+
                     </div>
 
                   </div>
-
 
                   <div className="payment-option">
 
@@ -450,7 +467,6 @@ function Checkout() {
 
                 </div>
 
-
                 {/* PLACE ORDER */}
 
                 <button
@@ -467,7 +483,9 @@ function Checkout() {
                   ) : (
                     <>
                       Place Order
-                      <span>₹{finalTotal}</span>
+                      <span>
+                        ₹{finalTotal}
+                      </span>
                     </>
                   )}
 
@@ -477,15 +495,16 @@ function Checkout() {
 
             </div>
 
-
             {/* TRUST INFO */}
 
             <div className="checkout-trust">
 
               <div>
+
                 <span>🔒</span>
 
                 <div>
+
                   <strong>
                     Secure Checkout
                   </strong>
@@ -493,14 +512,17 @@ function Checkout() {
                   <small>
                     Your information is protected
                   </small>
+
                 </div>
+
               </div>
 
-
               <div>
+
                 <span>🚚</span>
 
                 <div>
+
                   <strong>
                     Fast Delivery
                   </strong>
@@ -508,14 +530,17 @@ function Checkout() {
                   <small>
                     Reliable doorstep delivery
                   </small>
+
                 </div>
+
               </div>
 
-
               <div>
+
                 <span>↩️</span>
 
                 <div>
+
                   <strong>
                     Easy Returns
                   </strong>
@@ -523,13 +548,14 @@ function Checkout() {
                   <small>
                     Hassle-free return policy
                   </small>
+
                 </div>
+
               </div>
 
             </div>
 
           </div>
-
 
           {/* =========================
               RIGHT SIDE
@@ -542,7 +568,6 @@ function Checkout() {
               <h4>
                 Order Summary
               </h4>
-
 
               {/* ITEMS */}
 
@@ -568,7 +593,6 @@ function Checkout() {
 
                     </div>
 
-
                     <div className="summary-product-info">
 
                       <strong>
@@ -580,7 +604,6 @@ function Checkout() {
                       </small>
 
                     </div>
-
 
                     <span className="summary-item-price">
                       ₹
@@ -594,9 +617,7 @@ function Checkout() {
 
               </div>
 
-
               <hr />
-
 
               {/* PRICE */}
 
@@ -611,7 +632,6 @@ function Checkout() {
                 </span>
 
               </div>
-
 
               <div className="summary-row">
 
@@ -633,9 +653,7 @@ function Checkout() {
 
               </div>
 
-
               <hr />
-
 
               <div className="summary-total">
 
@@ -648,7 +666,6 @@ function Checkout() {
                 </strong>
 
               </div>
-
 
               <div className="summary-secure">
                 🔒 Safe & Secure Payments

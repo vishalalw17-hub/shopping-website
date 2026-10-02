@@ -5,15 +5,32 @@ const {
   getUserOrders
 } = require("../controllers/orderController");
 
+const {
+  authMiddleware
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
 
-// Place Order
+// =========================
+// AUTHENTICATION
+// =========================
+
+router.use(authMiddleware);
+
+
+// =========================
+// PLACE ORDER
+// =========================
+
 router.post("/", createOrder);
 
 
-// Get User Orders
-router.get("/user/:userId", getUserOrders);
+// =========================
+// GET MY ORDERS
+// =========================
+
+router.get("/my-orders", getUserOrders);
 
 
 module.exports = router;

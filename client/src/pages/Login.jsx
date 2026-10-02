@@ -26,14 +26,21 @@ function Login() {
         formData
       );
 
+      // Save JWT token
+      localStorage.setItem(
+        "token",
+        response.data.token
+      );
+
+      // Save user information
       localStorage.setItem(
         "user",
         JSON.stringify(response.data.data)
       );
 
       window.dispatchEvent(
-  new Event("userUpdated")
-);
+        new Event("userUpdated")
+      );
 
       alert("Login successful!");
 

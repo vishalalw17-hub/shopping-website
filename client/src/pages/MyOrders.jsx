@@ -7,10 +7,12 @@ function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
 
   useEffect(() => {
-    if (user?._id) {
+    if (user) {
       fetchOrders();
     } else {
       setLoading(false);
@@ -20,12 +22,20 @@ function MyOrders() {
   const fetchOrders = async () => {
     try {
       const response = await API.get(
-        `/orders/user/${user._id}`
+        "/orders/my-orders"
       );
 
       setOrders(response.data.data || []);
+
     } catch (error) {
       console.log("Order Error:", error);
+
+      if (error.response?.status === 401) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+
+        window.location.href = "/login";
+      }
     } finally {
       setLoading(false);
     }
@@ -35,7 +45,10 @@ function MyOrders() {
     return (
       <div className="orders-login">
         <div className="orders-login-card">
-          <div className="orders-icon">🔐</div>
+
+          <div className="orders-icon">
+            🔐
+          </div>
 
           <h2>Please Login First</h2>
 
@@ -43,9 +56,13 @@ function MyOrders() {
             Login to view your orders and track your purchases.
           </p>
 
-          <Link to="/login" className="orders-primary-btn">
+          <Link
+            to="/login"
+            className="orders-primary-btn"
+          >
             Login Now
           </Link>
+
         </div>
       </div>
     );
@@ -54,33 +71,52 @@ function MyOrders() {
   if (loading) {
     return (
       <div className="orders-loading">
+
         <div className="orders-spinner"></div>
-        <h3>Loading your orders...</h3>
-        <p>Please wait a moment.</p>
+
+        <h3>
+          Loading your orders...
+        </h3>
+
+        <p>
+          Please wait a moment.
+        </p>
+
       </div>
     );
   }
 
   return (
     <div className="orders-page">
+
       <div className="container">
 
         {/* Page Header */}
         <div className="orders-heading">
-          <span>MY ACCOUNT</span>
 
-          <h1>My Orders</h1>
+          <span>
+            MY ACCOUNT
+          </span>
+
+          <h1>
+            My Orders
+          </h1>
 
           <p>
             Track and manage all your purchases in one place.
           </p>
+
         </div>
 
         {/* Order Count */}
         {orders.length > 0 && (
           <div className="orders-summary-bar">
+
             <div>
-              <strong>{orders.length}</strong>
+              <strong>
+                {orders.length}
+              </strong>
+
               <span>
                 {orders.length === 1
                   ? " Order"
@@ -91,18 +127,22 @@ function MyOrders() {
             <Link to="/products">
               Continue Shopping →
             </Link>
+
           </div>
         )}
 
         {/* Empty Orders */}
         {orders.length === 0 ? (
+
           <div className="empty-orders">
 
             <div className="empty-orders-icon">
               📦
             </div>
 
-            <h2>No Orders Yet</h2>
+            <h2>
+              No Orders Yet
+            </h2>
 
             <p>
               You haven't placed any orders yet.
@@ -117,7 +157,9 @@ function MyOrders() {
             </Link>
 
           </div>
+
         ) : (
+
           <div className="orders-list">
 
             {orders.map((order) => (
@@ -131,6 +173,7 @@ function MyOrders() {
                 <div className="order-header">
 
                   <div>
+
                     <span className="order-label">
                       ORDER ID
                     </span>
@@ -150,6 +193,7 @@ function MyOrders() {
                         })}
                       </small>
                     )}
+
                   </div>
 
                   <div className="order-status-box">
@@ -185,10 +229,12 @@ function MyOrders() {
                     >
 
                       <div className="order-item-image">
+
                         <img
                           src={item.image}
                           alt={item.name}
                         />
+
                       </div>
 
                       <div className="order-item-details">
@@ -198,8 +244,11 @@ function MyOrders() {
                         </h3>
 
                         <p>
-                          ₹{Number(item.price).toLocaleString("en-IN")}
-                          {" "}×{" "}
+                          ₹
+                          {Number(
+                            item.price
+                          ).toLocaleString("en-IN")}
+                          {" × "}
                           {item.quantity}
                         </p>
 
@@ -272,20 +321,27 @@ function MyOrders() {
                   </div>
 
                   <p>
+
                     <strong>
                       {order.shippingAddress?.name}
                     </strong>
+
                     {" • "}
+
                     {order.shippingAddress?.phone}
+
                     <br />
 
                     {order.shippingAddress?.address}
+
                     <br />
 
-                    {order.shippingAddress?.city},{" "}
+                    {order.shippingAddress?.city}
+                    {", "}
                     {order.shippingAddress?.state}
                     {" - "}
                     {order.shippingAddress?.pincode}
+
                   </p>
 
                 </div>
@@ -295,9 +351,11 @@ function MyOrders() {
             ))}
 
           </div>
+
         )}
 
       </div>
+
     </div>
   );
 }

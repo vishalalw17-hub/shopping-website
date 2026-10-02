@@ -1,0 +1,307 @@
+/* =========================================
+   ADMIN USERS PAGE
+========================================= */
+
+.admin-users-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 40px 0 70px;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.admin-heading {
+  margin-bottom: 28px;
+}
+
+.admin-heading h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.admin-heading p {
+  color: #64748b;
+  margin: 0;
+  font-size: 15px;
+}
+
+
+/* =========================================
+   SEARCH / TOOLS
+========================================= */
+
+.admin-user-tools {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+}
+
+.admin-user-tools .form-control {
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  padding-left: 16px;
+}
+
+.admin-user-tools .form-control:focus {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+}
+
+
+/* =========================================
+   USER COUNT
+========================================= */
+
+.user-count-box {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f0fdfa;
+  border: 1px solid #99f6e4;
+  border-radius: 10px;
+
+  color: #0f766e;
+  font-size: 15px;
+}
+
+.user-count-box strong {
+  margin-left: 5px;
+  font-size: 18px;
+}
+
+
+/* =========================================
+   USER LIST
+========================================= */
+
+.admin-user-list {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =========================================
+   LIST HEADER
+========================================= */
+
+.user-list-header {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.user-list-header h4 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.user-list-header span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.admin-user-list table {
+  margin-bottom: 0;
+}
+
+.admin-user-list thead th {
+  background: #0f172a !important;
+  color: #ffffff;
+  border-color: #1e293b;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 15px 14px;
+  white-space: nowrap;
+}
+
+.admin-user-list tbody td {
+  padding: 15px 14px;
+  font-size: 14px;
+  color: #334155;
+  border-color: #e2e8f0;
+  vertical-align: middle;
+}
+
+.admin-user-list tbody tr {
+  transition: 0.2s ease;
+}
+
+.admin-user-list tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   USER NAME
+========================================= */
+
+.admin-user-list tbody td strong {
+  color: #0f172a;
+  font-weight: 650;
+}
+
+
+/* =========================================
+   ROLE BADGES
+========================================= */
+
+.admin-user-list .badge {
+  padding: 7px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-user-list .bg-danger {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.admin-user-list .bg-primary {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+}
+
+
+/* =========================================
+   ROLE SELECT
+========================================= */
+
+.user-role-select {
+  width: 105px;
+  display: inline-block;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.user-role-select:focus {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+}
+
+
+/* =========================================
+   DELETE BUTTON
+========================================= */
+
+.admin-user-list .btn-danger {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #dc2626;
+  transition: 0.2s ease;
+}
+
+.admin-user-list .btn-danger:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.admin-users-page
+  > .container
+  > h3 {
+  color: #64748b;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .admin-users-page {
+    padding: 25px 0 50px;
+  }
+
+  .admin-heading h1 {
+    font-size: 26px;
+  }
+
+  .admin-user-tools {
+    padding: 16px;
+  }
+
+  .user-count-box {
+    justify-content: flex-start;
+    padding-left: 15px;
+  }
+
+  .user-list-header {
+    padding: 17px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .admin-user-list tbody td,
+  .admin-user-list thead th {
+    font-size: 12px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 576px) {
+
+  .admin-users-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .admin-heading h1 {
+    font-size: 23px;
+  }
+
+  .admin-heading p {
+    font-size: 13px;
+  }
+
+  .user-role-select {
+    width: 90px;
+    margin-bottom: 6px;
+  }
+
+  .admin-user-list .btn-danger {
+    margin-left: 0 !important;
+  }
+
+}

@@ -1,62 +1,151 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, {
+  useEffect,
+  useState
+} from "react";
+
+import {
+  useSearchParams
+} from "react-router-dom";
+
 import API from "../services/api";
 import ProductCard from "../components/ProductCard";
+
 import "./Products.css";
 
 function Products() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  // URL category
-  const [searchParams] = useSearchParams();
-  const category = searchParams.get("category");
+  const [products, setProducts] =
+    useState([]);
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] =
+    useState(true);
+
+  const [searchParams] =
+    useSearchParams();
+
+  const category =
+    searchParams.get("category");
+
+  const search =
+    searchParams.get("search") || "";
+
+
+  // =========================
+  // PAGINATION
+  // =========================
+
+  const [currentPage, setCurrentPage] =
+    useState(1);
 
   const productsPerPage = 8;
+
 
   // =========================
   // FETCH PRODUCTS
   // =========================
+
   const fetchProducts = async () => {
+
     try {
-      const response = await API.get("/products");
 
-      console.log("PRODUCT API RESPONSE:", response.data);
+      const response =
+        await API.get("/products");
 
-      setProducts(response.data.data || []);
+      // FULL API RESPONSE
+      console.log(
+        "PRODUCT API RESPONSE:",
+        response.data
+      );
+
+      // PRODUCTS ARRAY
+      console.log(
+        "PRODUCTS FROM MONGODB:",
+        response.data.data
+      );
+
+      // IMPORTANT:
+      // Make sure data is an array
+      if (
+        Array.isArray(
+          response.data.data
+        )
+      ) {
+
+        setProducts(
+          response.data.data
+        );
+
+      } else {
+
+        console.error(
+          "Products data is not an array:",
+          response.data.data
+        );
+
+        setProducts([]);
+
+      }
+
     } catch (error) {
-      console.log("Products Error:", error);
+
+      console.error(
+        "Products Error:",
+        error
+      );
+
+      console.error(
+        "Error Response:",
+        error.response?.data
+      );
+
+      setProducts([]);
+
     } finally {
+
       setLoading(false);
+
     }
+
   };
+
 
   // =========================
   // ADD TO CART
   // =========================
-  const addToCart = (product) => {
-    const oldCart =
-      JSON.parse(localStorage.getItem("cart")) || [];
 
-    const existingProduct = oldCart.find(
-      (item) => item._id === product._id
-    );
+  const addToCart = (product) => {
+
+    const oldCart =
+      JSON.parse(
+        localStorage.getItem("cart")
+      ) || [];
+
+
+    const existingProduct =
+      oldCart.find(
+        (item) =>
+          item._id === product._id
+      );
+
 
     let updatedCart;
 
+
     if (existingProduct) {
-      updatedCart = oldCart.map((item) =>
-        item._id === product._id
-          ? {
-              ...item,
-              quantity: item.quantity + 1
-            }
-          : item
-      );
+
+      updatedCart =
+        oldCart.map((item) =>
+          item._id === product._id
+            ? {
+                ...item,
+                quantity:
+                  item.quantity + 1
+              }
+            : item
+        );
+
     } else {
+
       updatedCart = [
         ...oldCart,
         {
@@ -64,74 +153,154 @@ function Products() {
           quantity: 1
         }
       ];
+
     }
 
+
+    // SAVE CART
     localStorage.setItem(
       "cart",
       JSON.stringify(updatedCart)
     );
 
+
+    // UPDATE HEADER CART COUNT
     window.dispatchEvent(
       new Event("cartUpdated")
     );
 
-    alert(`${product.name} added to cart 🛒`);
+
+    alert(
+      `${product.name} added to cart 🛒`
+    );
+
   };
+
 
   // =========================
   // LOAD PRODUCTS
   // =========================
+
   useEffect(() => {
+
     fetchProducts();
+
   }, []);
 
+
   // =========================
-  // RESET PAGE WHEN CATEGORY CHANGES
+  // RESET PAGINATION
   // =========================
+
   useEffect(() => {
+
     setCurrentPage(1);
-  }, [category]);
+
+  }, [category, search]);
+
 
   // =========================
   // LOADING
   // =========================
+
   if (loading) {
+
     return (
+
       <div className="products-loading">
+
         <div className="spinner-border"></div>
 
         <p>
           Loading products...
         </p>
+
       </div>
+
     );
+
   }
 
+
   // =========================
-  // CATEGORY FILTER
+  // FILTER PRODUCTS
   // =========================
-  const filteredProducts = category
-    ? products.filter(
-        (product) =>
-          product.category?.toLowerCase() ===
-          category.toLowerCase()
-      )
-    : products;
+
+  const filteredProducts =
+    products.filter((product) => {
+
+
+      // =========================
+      // CATEGORY FILTER
+      // =========================
+
+      const matchesCategory =
+        category
+          ? product.category
+              ?.toLowerCase() ===
+            category.toLowerCase()
+          : true;
+
+
+      // =========================
+      // SEARCH FILTER
+      // =========================
+
+      const searchText =
+        search
+          .toLowerCase()
+          .trim();
+
+
+      const matchesSearch =
+        searchText
+          ? product.name
+              ?.toLowerCase()
+              .includes(searchText) ||
+
+            product.brand
+              ?.toLowerCase()
+              .includes(searchText) ||
+
+            product.category
+              ?.toLowerCase()
+              .includes(searchText) ||
+
+            product.description
+              ?.toLowerCase()
+              .includes(searchText)
+
+          : true;
+
+
+      return (
+        matchesCategory &&
+        matchesSearch
+      );
+
+    });
+
 
   // =========================
   // PAGINATION
   // =========================
-  const totalPages = Math.ceil(
-    filteredProducts.length /
-      productsPerPage
-  );
+
+  const totalPages =
+    Math.ceil(
+      filteredProducts.length /
+        productsPerPage
+    );
+
 
   const lastProductIndex =
-    currentPage * productsPerPage;
+    currentPage *
+    productsPerPage;
+
 
   const firstProductIndex =
     lastProductIndex -
     productsPerPage;
+
 
   const currentProducts =
     filteredProducts.slice(
@@ -139,68 +308,121 @@ function Products() {
       lastProductIndex
     );
 
+
   // =========================
   // CHANGE PAGE
   // =========================
-  const changePage = (pageNumber) => {
-    setCurrentPage(pageNumber);
+
+  const changePage = (
+    pageNumber
+  ) => {
+
+    setCurrentPage(
+      pageNumber
+    );
+
 
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
+
   };
 
+
+  // =========================
+  // RETURN
+  // =========================
+
   return (
+
     <div className="products-page">
 
       <div className="container">
 
+
         {/* =========================
             PAGE HEADING
         ========================= */}
+
         <div className="products-heading">
 
           <span>
-            {category
+
+            {search
+              ? "SEARCH"
+              : category
               ? category.toUpperCase()
               : "SHOP"}
+
           </span>
 
+
           <h1>
-            {category
+
+            {search
+              ? `Search Results for "${search}"`
+              : category
               ? `${category} Products`
               : "Explore Our Products"}
+
           </h1>
 
+
           <p>
-            {category
+
+            {search
+              ? `Showing products matching "${search}".`
+              : category
               ? `Discover the best ${category.toLowerCase()} products at great prices.`
               : "Discover amazing products at great prices."}
+
           </p>
 
         </div>
 
+
         {/* =========================
             PRODUCT COUNT
         ========================= */}
+
         <div className="products-topbar">
 
           <span>
-            {filteredProducts.length} Products Available
+
+            {filteredProducts.length}
+
+            {" "}
+
+            {filteredProducts.length === 1
+              ? "Product"
+              : "Products"}
+
+            {" "}
+            Available
+
           </span>
 
+
           {filteredProducts.length > 0 && (
+
             <span>
-              Page {currentPage} of {totalPages}
+
+              Page {currentPage} of{" "}
+
+              {totalPages}
+
             </span>
+
           )}
 
         </div>
 
+
         {/* =========================
             PRODUCT GRID
         ========================= */}
+
         <div className="row g-4">
 
           {filteredProducts.length === 0 ? (
@@ -211,15 +433,20 @@ function Products() {
                 🛍️
               </div>
 
+
               <h3>
-                No Products Available
+                No Products Found
               </h3>
 
+
               <p>
-                No products found in{" "}
-                <strong>
-                  {category || "this category"}
-                </strong>.
+
+                {search
+                  ? `No products found for "${search}".`
+                  : category
+                  ? `No products available in ${category}.`
+                  : "Products will appear here once they are added by the admin."}
+
               </p>
 
             </div>
@@ -236,7 +463,9 @@ function Products() {
 
                   <ProductCard
                     product={product}
-                    onAddToCart={addToCart}
+                    onAddToCart={
+                      addToCart
+                    }
                   />
 
                 </div>
@@ -248,73 +477,108 @@ function Products() {
 
         </div>
 
+
         {/* =========================
             PAGINATION
         ========================= */}
+
         {totalPages > 1 && (
 
           <div className="products-pagination">
 
+
+            {/* PREVIOUS */}
+
             <button
               className="pagination-btn"
-              disabled={currentPage === 1}
+
+              disabled={
+                currentPage === 1
+              }
+
               onClick={() =>
                 changePage(
                   currentPage - 1
                 )
               }
             >
+
               ← Previous
+
             </button>
+
+
+            {/* PAGE NUMBERS */}
 
             <div className="pagination-numbers">
 
               {Array.from(
                 {
-                  length: totalPages
+                  length:
+                    totalPages
                 },
+
                 (_, index) => {
 
                   const pageNumber =
                     index + 1;
 
+
                   return (
+
                     <button
-                      key={pageNumber}
+                      key={
+                        pageNumber
+                      }
+
                       className={
                         currentPage ===
                         pageNumber
                           ? "pagination-number active"
                           : "pagination-number"
                       }
+
                       onClick={() =>
                         changePage(
                           pageNumber
                         )
                       }
                     >
+
                       {pageNumber}
+
                     </button>
+
                   );
 
                 }
+
               )}
 
             </div>
 
+
+            {/* NEXT */}
+
             <button
               className="pagination-btn"
+
               disabled={
-                currentPage === totalPages
+                currentPage ===
+                totalPages
               }
+
               onClick={() =>
                 changePage(
                   currentPage + 1
                 )
               }
             >
+
               Next →
+
             </button>
+
 
           </div>
 
@@ -323,7 +587,10 @@ function Products() {
       </div>
 
     </div>
+
   );
+
 }
+
 
 export default Products;

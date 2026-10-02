@@ -1,0 +1,457 @@
+/* =================================
+   FOOTER
+================================= */
+
+.shop-footer {
+  margin-top: 60px;
+  background: #0f172a;
+  color: #ffffff;
+}
+
+
+/* =================================
+   MAIN FOOTER
+================================= */
+
+.footer-main {
+  padding: 65px 0 50px;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  text-decoration: none;
+
+  color: #ffffff;
+
+  font-size: 27px;
+  font-weight: 800;
+}
+
+.footer-brand > span:last-child span {
+  color: #0d9488;
+}
+
+.footer-brand-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #0d9488;
+
+  font-size: 21px;
+}
+
+.footer-description {
+  max-width: 350px;
+
+  margin-top: 20px;
+  margin-bottom: 22px;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =================================
+   TRUST
+================================= */
+
+.footer-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.footer-trust div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+}
+
+.footer-trust span {
+  color: #94a3b8;
+}
+
+
+/* =================================
+   TITLES
+================================= */
+
+.footer-title {
+  margin-bottom: 22px;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* =================================
+   LINKS
+================================= */
+
+.footer-links {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 13px;
+}
+
+.footer-links a {
+  color: #94a3b8;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  transition: 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: #0d9488;
+
+  padding-left: 4px;
+}
+
+
+/* =================================
+   CONTACT
+================================= */
+
+.footer-contact p {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-bottom: 15px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.footer-contact p span {
+  word-break: break-word;
+}
+
+
+/* =================================
+   NEWSLETTER
+================================= */
+
+.footer-newsletter {
+  padding: 0 0 50px;
+}
+
+.newsletter-box {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  padding: 32px;
+
+  border-radius: 18px;
+
+  background: #1e293b;
+
+  border: 1px solid #334155;
+}
+
+.newsletter-label {
+  color: #0d9488;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.newsletter-box h3 {
+  margin: 7px 0 5px;
+
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.newsletter-box p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+.newsletter-form {
+  display: flex;
+
+  min-width: 380px;
+
+  background: #ffffff;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.newsletter-form input {
+  flex: 1;
+
+  min-width: 0;
+
+  border: none;
+  outline: none;
+
+  padding: 13px 15px;
+
+  color: #1e293b;
+
+  font-size: 14px;
+}
+
+.newsletter-form input::placeholder {
+  color: #94a3b8;
+}
+
+.newsletter-form button {
+  border: none;
+
+  padding: 0 22px;
+
+  background: #0d9488;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.newsletter-form button:hover {
+  background: #0f766e;
+}
+
+
+/* =================================
+   BOTTOM FOOTER
+================================= */
+
+.footer-bottom {
+  border-top: 1px solid #334155;
+
+  padding: 22px 0;
+}
+
+.footer-bottom-inner {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.footer-bottom p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* =================================
+   SOCIAL
+================================= */
+
+.footer-social {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+}
+
+.footer-social a {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #1e293b;
+
+  color: #cbd5e1;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  transition: 0.25s ease;
+}
+
+.footer-social a:hover {
+  background: #0d9488;
+
+  color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =================================
+   POLICIES
+================================= */
+
+.footer-policies {
+  display: flex;
+
+  gap: 18px;
+}
+
+.footer-policies span {
+  color: #64748b;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.footer-policies span:hover {
+  color: #0d9488;
+}
+
+
+/* =================================
+   TABLET
+================================= */
+
+@media (max-width: 991px) {
+
+  .footer-main {
+    padding: 50px 0 35px;
+  }
+
+  .newsletter-box {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .newsletter-form {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+  .footer-bottom-inner {
+    flex-wrap: wrap;
+  }
+
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 767px) {
+
+  .shop-footer {
+    margin-top: 40px;
+  }
+
+  .footer-main {
+    padding: 40px 0 25px;
+  }
+
+  .footer-brand {
+    font-size: 24px;
+  }
+
+  .footer-description {
+    font-size: 13px;
+  }
+
+  .footer-title {
+    margin-top: 10px;
+  }
+
+  .newsletter-box {
+    padding: 24px;
+
+    border-radius: 14px;
+  }
+
+  .newsletter-box h3 {
+    font-size: 19px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+
+    background: transparent;
+
+    gap: 10px;
+
+    overflow: visible;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+
+    border-radius: 8px;
+
+    padding: 13px;
+  }
+
+  .newsletter-form button {
+    min-height: 44px;
+
+    border-radius: 8px;
+  }
+
+  .footer-bottom-inner {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .footer-policies {
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+} 

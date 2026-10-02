@@ -5,72 +5,51 @@ import ProductCard from "../components/ProductCard";
 import "./Home.css";
 
 function Home() {
-
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-
-  // Fetch products from MongoDB
+  // =========================
+  // FETCH PRODUCTS
+  // =========================
   useEffect(() => {
-
     const fetchProducts = async () => {
-
       try {
-
         const response = await API.get("/products");
 
-        setProducts(
-          response.data.data || []
-        );
-
+        setProducts(response.data.data || []);
       } catch (error) {
-
-        console.log(
-          "Home Products Error:",
-          error
-        );
-
+        console.log("Home Products Error:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProducts();
-
   }, []);
 
-
-  // Add product to cart
+  // =========================
+  // ADD TO CART
+  // =========================
   const addToCart = (product) => {
-
     const oldCart =
-      JSON.parse(
-        localStorage.getItem("cart")
-      ) || [];
+      JSON.parse(localStorage.getItem("cart")) || [];
 
-
-    const existingProduct =
-      oldCart.find(
-        (item) =>
-          item._id === product._id
-      );
-
+    const existingProduct = oldCart.find(
+      (item) => item._id === product._id
+    );
 
     let updatedCart;
 
-
     if (existingProduct) {
-
-      updatedCart =
-        oldCart.map((item) =>
-          item._id === product._id
-            ? {
-                ...item,
-                quantity:
-                  item.quantity + 1
-              }
-            : item
-        );
-
+      updatedCart = oldCart.map((item) =>
+        item._id === product._id
+          ? {
+              ...item,
+              quantity: item.quantity + 1
+            }
+          : item
+      );
     } else {
-
       updatedCart = [
         ...oldCart,
         {
@@ -78,37 +57,26 @@ function Home() {
           quantity: 1
         }
       ];
-
     }
 
-
-    // Save cart
     localStorage.setItem(
       "cart",
       JSON.stringify(updatedCart)
     );
 
-
-    // Update Header cart count
     window.dispatchEvent(
       new Event("cartUpdated")
     );
 
-
-    alert(
-      `${product.name} added to cart 🛒`
-    );
+    alert(`${product.name} added to cart 🛒`);
   };
-
 
   return (
     <div>
 
-
-      {/* =================================
+      {/* =========================
           HERO SECTION
-      ================================= */}
-
+      ========================= */}
       <section className="home-hero">
 
         <div className="container">
@@ -116,30 +84,23 @@ function Home() {
           <div className="row align-items-center">
 
             {/* LEFT */}
-
             <div className="col-lg-6">
 
               <span className="hero-badge">
                 🔥 Special Shopping Deals
               </span>
 
-
               <h1>
-
                 Shop Smart.
                 <br />
-
                 Shop <span>Easy.</span>
-
               </h1>
-
 
               <p>
                 Discover trending products,
                 amazing deals and everything
                 you need — all in one place.
               </p>
-
 
               <div className="hero-buttons">
 
@@ -150,7 +111,6 @@ function Home() {
                   Shop Now →
                 </Link>
 
-
                 <Link
                   to="/products"
                   className="explore-btn"
@@ -160,26 +120,19 @@ function Home() {
 
               </div>
 
-
-              {/* FEATURES */}
-
               <div className="hero-features">
 
                 <div>
-
                   <strong>
-                    10K+
+                    {products.length}+
                   </strong>
 
                   <small>
                     Products
                   </small>
-
                 </div>
 
-
                 <div>
-
                   <strong>
                     5K+
                   </strong>
@@ -187,12 +140,9 @@ function Home() {
                   <small>
                     Customers
                   </small>
-
                 </div>
 
-
                 <div>
-
                   <strong>
                     24/7
                   </strong>
@@ -200,27 +150,22 @@ function Home() {
                   <small>
                     Support
                   </small>
-
                 </div>
 
               </div>
 
             </div>
 
-
             {/* RIGHT */}
-
             <div className="col-lg-6 text-center">
 
               <div className="hero-shopping-icon">
                 🛍️
               </div>
 
-
               <div className="floating-card card-one">
                 ⭐ 4.8 Rating
               </div>
-
 
               <div className="floating-card card-two">
                 🚚 Fast Delivery
@@ -235,11 +180,9 @@ function Home() {
       </section>
 
 
-
-      {/* =================================
+      {/* =========================
           CATEGORIES
-      ================================= */}
-
+      ========================= */}
       <section className="categories-section">
 
         <div className="container">
@@ -264,13 +207,36 @@ function Home() {
 
           <div className="row g-4">
 
-
-            {/* Electronics */}
-
+            {/* FASHION */}
             <div className="col-6 col-md-3">
 
               <Link
-                to="/products"
+                to="/products?category=Fashion"
+                className="category-card"
+              >
+
+                <div className="category-icon">
+                  👗
+                </div>
+
+                <h5>
+                  Fashion
+                </h5>
+
+                <p>
+                  Trending styles
+                </p>
+
+              </Link>
+
+            </div>
+
+
+            {/* ELECTRONICS */}
+            <div className="col-6 col-md-3">
+
+              <Link
+                to="/products?category=Electronics"
                 className="category-card"
               >
 
@@ -291,38 +257,11 @@ function Home() {
             </div>
 
 
-            {/* Fashion */}
-
+            {/* FOOTWEAR */}
             <div className="col-6 col-md-3">
 
               <Link
-                to="/products"
-                className="category-card"
-              >
-
-                <div className="category-icon">
-                  👕
-                </div>
-
-                <h5>
-                  Fashion
-                </h5>
-
-                <p>
-                  Trending styles
-                </p>
-
-              </Link>
-
-            </div>
-
-
-            {/* Footwear */}
-
-            <div className="col-6 col-md-3">
-
-              <Link
-                to="/products"
+                to="/products?category=Footwear"
                 className="category-card"
               >
 
@@ -343,12 +282,61 @@ function Home() {
             </div>
 
 
-            {/* Accessories */}
-
+            {/* BEAUTY */}
             <div className="col-6 col-md-3">
 
               <Link
-                to="/products"
+                to="/products?category=Beauty"
+                className="category-card"
+              >
+
+                <div className="category-icon">
+                  💄
+                </div>
+
+                <h5>
+                  Beauty
+                </h5>
+
+                <p>
+                  Beauty essentials
+                </p>
+
+              </Link>
+
+            </div>
+
+
+            {/* HOME & LIVING */}
+            <div className="col-6 col-md-3">
+
+              <Link
+                to="/products?category=Home%20%26%20Living"
+                className="category-card"
+              >
+
+                <div className="category-icon">
+                  🏠
+                </div>
+
+                <h5>
+                  Home & Living
+                </h5>
+
+                <p>
+                  Make your home better
+                </p>
+
+              </Link>
+
+            </div>
+
+
+            {/* ACCESSORIES */}
+            <div className="col-6 col-md-3">
+
+              <Link
+                to="/products?category=Accessories"
                 className="category-card"
               >
 
@@ -368,6 +356,56 @@ function Home() {
 
             </div>
 
+
+            {/* BAGS */}
+            <div className="col-6 col-md-3">
+
+              <Link
+                to="/products?category=Bags"
+                className="category-card"
+              >
+
+                <div className="category-icon">
+                  👜
+                </div>
+
+                <h5>
+                  Bags
+                </h5>
+
+                <p>
+                  Stylish bags
+                </p>
+
+              </Link>
+
+            </div>
+
+
+            {/* DEALS */}
+            <div className="col-6 col-md-3">
+
+              <Link
+                to="/products"
+                className="category-card"
+              >
+
+                <div className="category-icon">
+                  🔥
+                </div>
+
+                <h5>
+                  Deals
+                </h5>
+
+                <p>
+                  Best offers
+                </p>
+
+              </Link>
+
+            </div>
+
           </div>
 
         </div>
@@ -375,17 +413,12 @@ function Home() {
       </section>
 
 
-
-      {/* =================================
+      {/* =========================
           POPULAR PRODUCTS
-      ================================= */}
-
+      ========================= */}
       <section className="popular-products-section">
 
         <div className="container">
-
-
-          {/* Heading */}
 
           <div className="popular-heading">
 
@@ -406,7 +439,6 @@ function Home() {
 
             </div>
 
-
             <Link
               to="/products"
               className="view-all-btn"
@@ -417,11 +449,27 @@ function Home() {
           </div>
 
 
-          {/* Products */}
-
           <div className="row g-4">
 
-            {products.length === 0 ? (
+            {loading ? (
+
+              <div className="col-12">
+
+                <div className="home-products-empty">
+
+                  <div>
+                    ⏳
+                  </div>
+
+                  <p>
+                    Loading products...
+                  </p>
+
+                </div>
+
+              </div>
+
+            ) : products.length === 0 ? (
 
               <div className="col-12">
 
@@ -468,19 +516,14 @@ function Home() {
       </section>
 
 
-
-      {/* =================================
+      {/* =========================
           BENEFITS
-      ================================= */}
-
+      ========================= */}
       <section className="benefits-section">
 
         <div className="container">
 
           <div className="row g-4">
-
-
-            {/* Fast Delivery */}
 
             <div className="col-md-4">
 
@@ -504,8 +547,6 @@ function Home() {
             </div>
 
 
-            {/* Secure Shopping */}
-
             <div className="col-md-4">
 
               <div className="benefit-card">
@@ -528,8 +569,6 @@ function Home() {
 
             </div>
 
-
-            {/* Quality Products */}
 
             <div className="col-md-4">
 
@@ -557,7 +596,6 @@ function Home() {
         </div>
 
       </section>
-
 
     </div>
   );

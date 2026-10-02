@@ -5,6 +5,9 @@ import {
 } from "react-router-dom";
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
+import ProtectRoute from "./components/ProtectRoute";
+
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
@@ -12,89 +15,125 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import MyOrders from "./pages/MyOrders";
-import AdminDashboard from "./pages/AdminDashboard";
 import User from "./pages/User";
+import ProductDetails from "./pages/ProductDetails";
+
+import AdminDashboard from "./pages/AdminDashboard";
 import AdminProducts from "./pages/AdminProducts";
 import AdminOrders from "./pages/AdminOrders";
 import AdminUsers from "./pages/AdminUsers";
-import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
     <BrowserRouter>
-
       <Header />
 
       <Routes>
 
-        {/* Home */}
+        {/* ================= PUBLIC ROUTES ================= */}
+
         <Route
           path="/"
           element={<Home />}
         />
 
-        {/* Products */}
         <Route
           path="/products"
           element={<Products />}
         />
 
-        {/* Cart */}
         <Route
-          path="/cart"
-          element={<Cart />}
+          path="/products/:id"
+          element={<ProductDetails />}
         />
 
-        <Route
-  path="/admin/users"
-  element={<AdminUsers />}
-/>
-<Route
-  path="/admin/orders"
-  element={<AdminOrders />}
-/>
-
-<Route
-  path="/products/:id"
-  element={<ProductDetails />}
-/>
-
-<Route
-  path="/user"
-  element={<User />}
-/>
-<Route
-  path="/admin/products"
-  element={<AdminProducts />}
-/>
-        <Route
-  path="/checkout"
-  element={<Checkout />}
-/>
-
-<Route
-  path="/my-orders"
-  element={<MyOrders />}
-/>
-
-<Route
-  path="/admin"
-  element={<AdminDashboard />}
-/>
-        {/* Login */}
         <Route
           path="/login"
           element={<Login />}
         />
 
-        {/* Register */}
         <Route
           path="/register"
           element={<Register />}
         />
 
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
+
+
+        {/* ================= USER PROTECTED ROUTES ================= */}
+
+        <Route
+          path="/checkout"
+          element={
+            <ProtectRoute>
+              <Checkout />
+            </ProtectRoute>
+          }
+        />
+
+        <Route
+          path="/my-orders"
+          element={
+            <ProtectRoute>
+              <MyOrders />
+            </ProtectRoute>
+          }
+        />
+
+        <Route
+          path="/user"
+          element={
+            <ProtectRoute>
+              <User />
+            </ProtectRoute>
+          }
+        />
+
+
+        {/* ================= ADMIN PROTECTED ROUTES ================= */}
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectRoute adminOnly={true}>
+              <AdminDashboard />
+            </ProtectRoute>
+          }
+        />
+
+        <Route
+          path="/admin/products"
+          element={
+            <ProtectRoute adminOnly={true}>
+              <AdminProducts />
+            </ProtectRoute>
+          }
+        />
+
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectRoute adminOnly={true}>
+              <AdminOrders />
+            </ProtectRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectRoute adminOnly={true}>
+              <AdminUsers />
+            </ProtectRoute>
+          }
+        />
+
       </Routes>
 
+      <Footer />
     </BrowserRouter>
   );
 }
